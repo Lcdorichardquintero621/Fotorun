@@ -1,0 +1,9 @@
+tu-repositorio/
+├── pubspec.yaml
+├── lib/
+│   └── main.dart
+├── assets/
+│   └── mobilefacenet.tflite
+└── .github/
+    └── workflows/
+        └── build.yml
