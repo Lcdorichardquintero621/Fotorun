@@ -29,6 +29,13 @@ jobs:
           sed -i 's#<application#<uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/><uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/><uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/><uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/><application#' android/app/src/main/AndroidManifest.xml
 
       - name: Subir minSdk
-        run: |
-          sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 24/' android/app/build.gradle.kts || true
-          sed -i 's/minSdkVersion flutter.minSdkVe
+        run: sed -i "s/minSdk = flutter.minSdkVersion/minSdk = 24/" android/app/build.gradle.kts
+
+      - run: flutter pub get
+
+      - run: flutter build apk --release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FotoRun-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
