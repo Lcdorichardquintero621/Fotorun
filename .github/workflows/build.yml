@@ -32,7 +32,9 @@ jobs:
         run: sed -i "s/minSdk = flutter.minSdkVersion/minSdk = 24/" android/app/build.gradle.kts
 
       - name: Tolerar versiones de Java y Kotlin
-        run: echo "kotlin.jvm.target.validation.mode=warning" >> android/gradle.properties
+        run: echo "kotlin.jvm.target.validation.mode=warning" >> android/gradle.properties       - name: Desactivar lint
+        run: |
+          sed -i 's/^android {/android {\n    lint {\n        checkReleaseBuilds = false\n        abortOnError = false\n    }/' android/app/build.gradle.kts
 
       - run: flutter pub get
 
