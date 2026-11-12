@@ -24,17 +24,19 @@ jobs:
       - name: Crear plataforma Android
         run: flutter create --platforms=android --project-name fotorun --org com.fotorun .
 
-      - name: Añadir permisos
+      - name: Anadir permisos
         run: |
           sed -i 's#<application#<uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/><uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/><uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/><uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/><application#' android/app/src/main/AndroidManifest.xml
 
       - name: Subir minSdk
         run: sed -i "s/minSdk = flutter.minSdkVersion/minSdk = 24/" android/app/build.gradle.kts
 
-      - name: Tolerar versiones de Java y Kotlin
-        run: echo "kotlin.jvm.target.validation.mode=warning" >> android/gradle.properties      - name: Desactivar lint
+      - name: Tolerar Java y Kotlin
+        run: echo "kotlin.jvm.target.validation.mode=warning" >> android/gradle.properties
+
+      - name: Desactivar lint
         run: |
-          sed -i 's/^android {/android {\n    lint {\n        checkReleaseBuilds = false\n        abortOnError = false\n    }/' android/app/build.gradle.kts
+          echo 'android { lint { checkReleaseBuilds = false; abortOnError = false } }' >> android/app/build.gradle.kts
 
       - run: flutter pub get
 
